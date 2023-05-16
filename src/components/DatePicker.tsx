@@ -3,6 +3,7 @@ import { ClassNames, DateFormatter, DayPicker, ModifiersClassNames, SelectSingle
 import styles from 'react-day-picker/dist/style.css';
 import { useDispatch, useSelector } from "react-redux"
 import { currentCalendar, setDay, setMonth } from "../store/modules/calendar";
+import { ko } from "date-fns/locale";
 const modifiersClassNames: ModifiersClassNames = {
     today: 'today',
     selected: 'selected',
@@ -34,13 +35,13 @@ export default function DatePicker({
             <DayPicker
                 showOutsideDays
                 fixedWeeks
-                // locale={ko}
+                locale={ko}
                 classNames={classNames}
                 modifiersClassNames={modifiersClassNames}
                 mode="single"
                 formatters={{ formatCaption }}
                 month={new Date(`${year}-${month}`)}
-                onMonthChange={(e: unknown) => dispatch(setMonth((e as Date).toString()))}
+                // onMonthChange={(e: unknown) => dispatch(setMonth((e as Date).toString()))}
                 onSelect={(e: unknown) => {
                     dispatch(setDay((e as SelectSingleEventHandler).toString()));
                     // dispatch(setCurrentSchedule({
