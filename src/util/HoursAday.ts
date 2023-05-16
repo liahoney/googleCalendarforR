@@ -1,12 +1,10 @@
+import { typeHours } from "../.."
 
 
 
 
 
-export type typeHours = {
-    text: string
-    hour: number
-}
+
 
 function create24HoursArray() {
 
