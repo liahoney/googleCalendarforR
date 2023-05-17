@@ -29,11 +29,14 @@ export const scheduleSlice = createSlice({
         },
         removeSchedule: (state, action: PayloadAction<{ date: string, index: number }>) => {
             delete state[action.payload.date][action.payload.index]
-        }
+        },
+        setCurrentSchedule: (state, action: PayloadAction<{ date: string, data: typeScheduleDetail[] }>) => {
+            state[action.payload.date] = action.payload.data
+        },
     }
 
 })
 
-export const { addSchedule, removeSchedule } = scheduleSlice.actions
+export const { addSchedule, removeSchedule, setCurrentSchedule } = scheduleSlice.actions
 export const schedules = (state: RootState) => state.schedule
 export default scheduleSlice.reducer

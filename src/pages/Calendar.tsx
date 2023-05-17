@@ -6,12 +6,14 @@ import LeftCalendar from "../components/LeftCalendar";
 import ScheduleCalendar from "../components/ScheduleCalendar";
 import { format } from "date-fns";
 import getThisWeek from "../util/getThisWeek";
+import AddScheduleButton from "../components/AddScheduleButton";
+import AddScheduleModal from "../components/AddScheduleModal";
 
 
 export default function Calendar() {
     const { year, month, days } = useSelector(currentCalendar)
     const [isLeftCalendar, setIsLeftCalendar] = useState<boolean>(true)
-    const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
     const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
     const [modalDate, setModalDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
     const [timeIndex, setTimeIndex] = useState<number>(0)
@@ -20,9 +22,9 @@ export default function Calendar() {
         <>
             <Header year={year} month={month} isLeftCalendar={isLeftCalendar} setIsLeftCalendar={setIsLeftCalendar} />
             <main className="flex h-[calc(100%_-_3.5rem)] flex-1">
-                {/* <AddScheduleButton /> */}
+                <AddScheduleButton isLeftCalendar={true} isOpen={isOpen} setIsOpen={setIsOpen} />
                 <div className={`p-5 flex flex-col mt-[65px] ${isLeftCalendar ? 'block' : 'hidden'}`}>
-                    {/* <LeftCalendarTitle/> */}
+
                     <LeftCalendar isOpen={true} isModal={false} />
                 </div>
                 <div className="flex flex-col h-full overflow-x-scroll flex-1 pr-2">
@@ -30,12 +32,16 @@ export default function Calendar() {
                         days={getThisWeek(days)}
                         setModalDate={setModalDate}
                         setTimeIndex={setTimeIndex}
-                        setIsOpenModal={setIsOpenModal}
+                        setIsOpenModal={setIsOpen}
                         isDeleteOpen={isDeleteOpen}
                         setIsDeleteOpen={setIsDeleteOpen} />
 
                 </div>
-                {/* <AddScheduleModal/> */}
+                <AddScheduleModal
+                    defaultDate={modalDate}
+                    timeIndex={timeIndex}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen} />
 
             </main>
         </>

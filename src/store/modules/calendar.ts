@@ -63,10 +63,12 @@ export const calendarSlice = createSlice({
             state.current = { day: selectDate, ...newDate }
         },
         setMonth: (state, action: PayloadAction<string>) => {
-            const selectDate = new Date(state.select).setMonth(Number(action.payload) - 1).toString();
-            const newDate = generateNewDate({ selectDate, changeDate: selectDate });
-            state.select = selectDate;
-            state.current = { day: selectDate, ...newDate };
+            const selectDate = new Date(state.select);
+            selectDate.setMonth(Number(action.payload));
+            const selectDateString = selectDate.toString();
+            const newDate = generateNewDate({ selectDate: selectDateString, changeDate: selectDateString });
+            state.select = selectDateString;
+            state.current = { day: selectDateString, ...newDate };
         },
 
 

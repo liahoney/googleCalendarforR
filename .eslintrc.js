@@ -12,15 +12,16 @@ module.exports = {
     },
     rules: {
         "import/extensions": [
-            "error",
-            'always',
-            // "ignorePackages",
+            "off",
+            "ignorePackages",
             {
                 "ts": "never",
                 "js": "never"
             }
         ],
-        "import/allowImportingTsExtensions": [0, { allowExtensions: true }]
+        "import/allowImportingTsExtensions": [0, { allowExtensions: true }],
+        "no-unused-vars": "off",
+        "no-undef": "off"
     },
     overrides: [
         {

@@ -1,8 +1,9 @@
 import { format } from "date-fns";
-import { ClassNames, DateFormatter, DayPicker, ModifiersClassNames, SelectSingleEventHandler } from "react-day-picker"
+import { ClassNames, DateFormatter, DayPicker, ModifiersClassNames, MonthChangeEventHandler, SelectSingleEventHandler } from "react-day-picker"
 import styles from 'react-day-picker/dist/style.css';
 import { useDispatch, useSelector } from "react-redux"
-import { currentCalendar, setDay, setMonth } from "../store/modules/calendar";
+import { currentCalendar, nextMonth, setDay, setMonth } from "../store/modules/calendar";
+import { schedules, setCurrentSchedule } from "../store/modules/shedule"
 import { ko } from "date-fns/locale";
 const modifiersClassNames: ModifiersClassNames = {
     today: 'today',
@@ -19,6 +20,8 @@ const classNames: ClassNames = {
     cell: 'cell',
 }
 
+
+
 const formatCaption: DateFormatter = (month, options) => (format(month, 'yyyy년 M월', { locale: options?.locale }));
 
 export default function DatePicker({
@@ -29,7 +32,14 @@ export default function DatePicker({
     }) {
     const dispatch = useDispatch()
     const { day, days, year, month } = useSelector(currentCalendar)
+    const { date, scheduleData } = useSelector(schedules)
     const selectedDay = new Date(day)
+
+    const handleMonthChange: MonthChangeEventHandler = (date: Date) => {
+        const monthIndex = date.getMonth();
+        dispatch(setMonth(monthIndex.toString()));
+    };
+
     return (
         <div>
             <DayPicker
@@ -41,13 +51,10 @@ export default function DatePicker({
                 mode="single"
                 formatters={{ formatCaption }}
                 month={new Date(`${year}-${month}`)}
-                // onMonthChange={(e: unknown) => dispatch(setMonth((e as Date).toString()))}
+                onMonthChange={handleMonthChange}
                 onSelect={(e: unknown) => {
                     dispatch(setDay((e as SelectSingleEventHandler).toString()));
-                    // dispatch(setCurrentSchedule({
-                    //     ...currentSchedule,
-                    //     date: format((e as Date), 'yyyy-MM-dd')
-                    // }))
+                    dispatch(setCurrentSchedule({ date: selectedDay.toString(), data: scheduleData }));
                 }}
                 selected={selectedDay}
             />
