@@ -4,7 +4,7 @@
 
 export type typeDays = {
     date: number
-    dayOfWeek: number
+    weekDays: number
     isToday: boolean
     isSelected: boolean
     isThisWeek: boolean
@@ -13,8 +13,29 @@ export type typeDays = {
 }
 
 export type typeHours = {
-    text: string
-    hour: number
+    text?: string
+    hour?: number
+}
+
+export type typeMinutes = {
+    text?: string
+    hour?: number
+    minute?: number
+}
+
+export interface timeProps {
+    text?: string;
+    hour?: number;
+    minute?: number;
+}
+
+export interface calendarType {
+    date: string;
+    days: string[];
+    month: string;
+    weekDates: string[];
+    startTime: timeProps;
+    endTime: timeProps;
 }
 
 

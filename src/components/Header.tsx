@@ -1,18 +1,25 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, Fragment, SetStateAction } from "react"
 import { useDispatch } from "react-redux"
 import { lastMonth, lastWeek, nextWeek, setDay } from "../store/modules/calendar"
 import DatePicker from "./DatePicker"
+import { Menu, Transition } from "@headlessui/react"
+import { FiChevronDown } from 'react-icons/fi'
+import classNames from "../util/classNames"
 
 export default function Header({
     year,
     month,
     isLeftCalendar,
-    setIsLeftCalendar
+    setIsLeftCalendar,
+    weekView,
+    setWeekView,
 }: {
     year: number
     month: number
     isLeftCalendar: boolean
     setIsLeftCalendar: Dispatch<SetStateAction<boolean>>
+    weekView: boolean
+    setWeekView: Dispatch<SetStateAction<boolean>>;
 }) {
     const dispatch = useDispatch()
     return (
@@ -46,11 +53,72 @@ export default function Header({
                             className="cursor-pointer"
                             onClick={() => dispatch(nextWeek())} />
                         <span className="text-sm md:text-lg ml-3">{year}년{month}월</span>
+                        <div className="hidden md:ml-4 md:flex md:items-center">
+                            <Menu as="div" className="relative">
+                                <Menu.Button
+                                    type="button"
+                                    className="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                                >
+                                    {weekView ? "주" : "월"}
+                                    <FiChevronDown
+                                        className="ml-2 h-5 w-5 text-gray-400"
+                                        aria-hidden="true"
+                                    />
+                                </Menu.Button>
+                                <Transition
+                                    as={Fragment}
+                                    enter="transition ease-out duration-100"
+                                    enterFrom="transform opacity-0 scale-95"
+                                    enterTo="transform opacity-100 scale-100"
+                                    leave="transition ease-in duration-75"
+                                    leaveFrom="transform opacity-100 scale-100"
+                                    leaveTo="transform opacity-0 scale-95"
+                                >
+                                    <Menu.Items className="absolute right-0 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <div className="py-1">
+                                            <Menu.Item>
+                                                {({ active }) => (
+                                                    <a
+                                                        href="#!"
+                                                        onClick={() => setWeekView(true)}
+                                                        className={classNames(
+                                                            active
+                                                                ? "bg-gray-100 text-gray-900"
+                                                                : "text-gray-700",
+                                                            "block px-4 py-2 text-sm"
+                                                        )}
+                                                    >
+                                                        주
+                                                    </a>
+                                                )}
+                                            </Menu.Item>
+                                            <Menu.Item>
+                                                {({ active }) => (
+                                                    <a
+                                                        href="#!"
+                                                        onClick={() => setWeekView(false)}
+                                                        className={classNames(
+                                                            active
+                                                                ? "bg-gray-100 text-gray-900"
+                                                                : "text-gray-700",
+                                                            "block px-4 py-2 text-sm"
+                                                        )}
+                                                    >
+                                                        월
+                                                    </a>
+                                                )}
+                                            </Menu.Item>
+                                        </div>
+                                    </Menu.Items>
+                                </Transition>
+                            </Menu>
+
+                        </div>
                     </div>
 
                 </div>
             </div>
-            <span className="px-3 py-1 mx-3 border border-gray-200 rounded text-sm ml-auto">주</span>
+            {/* <span className="px-3 py-1 mx-3 border border-gray-200 rounded text-sm ml-auto">주</span> */}
         </header>
 
 

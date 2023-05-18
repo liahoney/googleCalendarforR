@@ -3,6 +3,7 @@ import { typeDays } from "../..";
 import { useDispatch, useSelector } from "react-redux";
 import { removeSchedule, schedules } from "../store/modules/shedule";
 import { hours24 } from "../util/HoursAday";
+import { dayOfWeek } from "../util/dayOfWeek";
 
 export default function ScheduleCalendar({
     days,
@@ -47,7 +48,7 @@ export default function ScheduleCalendar({
         setIsDeleteOpen(false)
         dispatch(removeSchedule({ date: deleteSchedule.date, index: deleteSchedule.index }))
     }
-    const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토']
+
 
     useEffect(() => {
         if (isDeleteOpen) {

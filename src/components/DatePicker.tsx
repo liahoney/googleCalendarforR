@@ -26,10 +26,12 @@ const formatCaption: DateFormatter = (month, options) => (format(month, 'yyyy년
 
 export default function DatePicker({
     isOpen,
-    isModal }: {
-        isOpen: boolean
-        isModal: boolean
-    }) {
+    isModal,
+}: {
+    isOpen: boolean
+    isModal: boolean
+
+}) {
     const dispatch = useDispatch()
     const { day, days, year, month } = useSelector(currentCalendar)
     const { date, scheduleData } = useSelector(schedules)

@@ -28,7 +28,12 @@ export const scheduleSlice = createSlice({
             }
         },
         removeSchedule: (state, action: PayloadAction<{ date: string, index: number }>) => {
-            delete state[action.payload.date][action.payload.index]
+            const { date, index } = action.payload;
+            const scheduleArray = state[date]; // 해당 날짜의 스케줄 배열
+
+            if (scheduleArray && scheduleArray.length > index) {
+                scheduleArray.splice(index, 1); // 해당 인덱스의 스케줄 삭제
+            }
         },
         setCurrentSchedule: (state, action: PayloadAction<{ date: string, data: typeScheduleDetail[] }>) => {
             state[action.payload.date] = action.payload.data

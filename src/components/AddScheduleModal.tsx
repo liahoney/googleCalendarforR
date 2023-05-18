@@ -72,7 +72,7 @@ export default function AddScheduleModal({
             },
         }
         dispatch(addSchedule(schedule))
-        console.log('you added schedule')
+
     }
 
     useEffect(() => {
