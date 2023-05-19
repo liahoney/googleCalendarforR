@@ -40,6 +40,7 @@ export default function DatePicker({
     const handleMonthChange: MonthChangeEventHandler = (date: Date) => {
         const monthIndex = date.getMonth();
         dispatch(setMonth(monthIndex.toString()));
+        console.log('monthIndex', monthIndex)
     };
 
     return (

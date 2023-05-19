@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { currentCalendar, setDay, setMonth } from "../store/modules/calendar";
 import { useDispatch } from "react-redux";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { schedules } from "../store/modules/shedule";
 import { sl } from "date-fns/locale";
 
@@ -9,13 +9,16 @@ import { sl } from "date-fns/locale";
 
 
 export default function MonthCalendar(
-    { isOpen, setIsOpen, isLeftCalendar }: { isOpen: boolean, setIsOpen: Dispatch<SetStateAction<boolean>>, isLeftCalendar: boolean }
+    { setIsOpen }: { setIsOpen: Dispatch<SetStateAction<boolean>> }
+    // { isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: Dispatch<SetStateAction<boolean>> }
 ) {
     const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토']
     const { day, year, month, days } = useSelector(currentCalendar)
     const dispatch = useDispatch()
     // const selectedDay = new Date(day)
     const scheduleData = useSelector(schedules)
+    const [IsModalOpen, setIsModalOpen] = useState<boolean>(false)
+
     return (
 
         <div className="lg:flex lg:h-full lg:flex-col col-span-5">
@@ -33,7 +36,11 @@ export default function MonthCalendar(
                     >
                         {days.map((day) => (
                             <div key={day.day} className="border border-solid border-gray-300 border-r-0 border-t-0 h-[110px]"
-                                onClick={() => dispatch(setDay((day.date).toString()))}
+                                onClick={() => {
+                                    dispatch(setDay((day.date).toString()))
+                                    console.log(`!you clicked ${day.date}day`)
+                                    setIsModalOpen(!IsModalOpen)
+                                }}
                             >
                                 {day.date}
                             </div>

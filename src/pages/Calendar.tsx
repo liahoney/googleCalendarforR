@@ -47,7 +47,10 @@ export default function Calendar() {
 
                 </div> :
                     <div className="flex flex-col h-full overflow-x-scroll flex-1 pr-2">
-                        <MonthCalendar isOpen={isOpen} setIsOpen={setIsOpen} isLeftCalendar={isLeftCalendar} /></div>}
+                        <MonthCalendar
+                            setIsOpen={setIsOpen}
+                        // isOpen={isOpen} setIsOpen={setIsOpen}
+                        /></div>}
 
                 <AddScheduleModal
                     defaultDate={modalDate}
