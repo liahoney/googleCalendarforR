@@ -8,11 +8,12 @@ import { format } from "date-fns";
 import getThisWeek from "../util/getThisWeek";
 import AddScheduleButton from "../components/AddScheduleButton";
 import AddScheduleModal from "../components/AddScheduleModal";
-import MonthCalendar from "./MonthCalendar";
+import MonthCalendar from "../components/MonthCalendar";
 
 
 
-export default function Calendar() {
+
+export default function CalendarWeek() {
     const { year, month, days } = useSelector(currentCalendar)
     const [isLeftCalendar, setIsLeftCalendar] = useState<boolean>(true)
     const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -35,8 +36,7 @@ export default function Calendar() {
 
 
 
-
-                {weekView ? <div className="flex flex-col h-full overflow-x-scroll flex-1 pr-2">
+                <div className="flex flex-col h-full overflow-x-scroll flex-1 pr-2">
                     <ScheduleCalendar
                         days={getThisWeek(days)}
                         setModalDate={setModalDate}
@@ -45,12 +45,9 @@ export default function Calendar() {
                         isDeleteOpen={isDeleteOpen}
                         setIsDeleteOpen={setIsDeleteOpen} />
 
-                </div> :
-                    <div className="flex flex-col h-full overflow-x-scroll flex-1 pr-2">
-                        <MonthCalendar
-                            setIsOpen={setIsOpen}
-                        // isOpen={isOpen} setIsOpen={setIsOpen}
-                        /></div>}
+                </div>
+
+
 
                 <AddScheduleModal
                     defaultDate={modalDate}

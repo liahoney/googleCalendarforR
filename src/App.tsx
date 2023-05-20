@@ -1,20 +1,17 @@
 
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Calendar from './pages/Calendar';
-import { Day } from 'react-day-picker';
-import MonthCalendar from './pages/MonthCalendar';
-import { useState } from 'react';
+import CalendarWeek from './pages/CalendarWeek';
+import CalendarMonth from './pages/CalendarMonth';
 
 
 
 function App() {
-  const [IsOpen, setIsOpen] = useState<boolean>(false)
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Calendar />} />
-        <Route path="/month" element={<MonthCalendar setIsOpen={setIsOpen} />} />
+        <Route path="/" element={<CalendarWeek />} />
+        <Route path="/month" element={<CalendarMonth />} />
       </Routes>
     </BrowserRouter>
   );

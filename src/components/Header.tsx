@@ -79,7 +79,7 @@ export default function Header({
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <a
-                                                        href="#!"
+                                                        href="/"
                                                         onClick={() => setWeekView(true)}
                                                         className={classNames(
                                                             active
@@ -95,7 +95,7 @@ export default function Header({
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <a
-                                                        href="#!"
+                                                        href="/month"
                                                         onClick={() => setWeekView(false)}
                                                         className={classNames(
                                                             active

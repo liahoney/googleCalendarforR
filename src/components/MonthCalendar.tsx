@@ -4,13 +4,26 @@ import { useDispatch } from "react-redux";
 import { Dispatch, SetStateAction, useState } from "react";
 import { schedules } from "../store/modules/shedule";
 import { sl } from "date-fns/locale";
+import { typeDays } from "../..";
 
 
 
 
 export default function MonthCalendar(
-    { setIsOpen }: { setIsOpen: Dispatch<SetStateAction<boolean>> }
-    // { isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: Dispatch<SetStateAction<boolean>> }
+    {
+        daysOfMonth,
+        setModalDate,
+        setTimeIndex,
+        setIsOpenModal,
+        isDeleteOpen,
+        setIsDeleteOpen }: {
+            daysOfMonth: typeDays[]
+            setModalDate: Dispatch<SetStateAction<string>>
+            setTimeIndex: Dispatch<SetStateAction<number>>
+            setIsOpenModal: Dispatch<SetStateAction<boolean>>
+            isDeleteOpen: boolean
+            setIsDeleteOpen: Dispatch<SetStateAction<boolean>>
+        }
 ) {
     const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토']
     const { day, year, month, days } = useSelector(currentCalendar)
@@ -34,7 +47,7 @@ export default function MonthCalendar(
                 <div className="flex bg-white-200 text-xs leading-6 text-gray-700 lg:flex-auto lg:h-screen md:h-screen overflow-scroll">
                     <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px"
                     >
-                        {days.map((day) => (
+                        {daysOfMonth.map((day) => (
                             <div key={day.day} className="border border-solid border-gray-300 border-r-0 border-t-0 h-[110px]"
                                 onClick={() => {
                                     dispatch(setDay((day.date).toString()))
