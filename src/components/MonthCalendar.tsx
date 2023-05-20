@@ -63,18 +63,17 @@ export default function MonthCalendar({
                 <div className="flex bg-white-200 text-xs leading-6 text-gray-700 lg:flex-auto lg:h-screen md:h-screen overflow-scroll">
                     <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
                         {daysOfMonth.map((dayItem) => {
-                            const currentDay = new Date(year, month - 1, dayItem.date);
+                            const currentDay = new Date(year, month - 1, dayItem.date + 1);
                             let style = {};
                             let title = '';
+                            let titleStyle: any = {}; // Add this line
                             const scheduleDataForCurrentDay = scheduleData[currentDay.toISOString().split('T')[0]];
                             if (scheduleDataForCurrentDay) {
                                 scheduleDataForCurrentDay.forEach((s: typeScheduleDetail) => {
-                                    const start = new Date(currentDay.getFullYear(),
-                                        currentDay.getMonth(), currentDay.getDate(), s.start.hour, s.start.minute);
-                                    const end = new Date(currentDay.getFullYear(),
-                                        currentDay.getMonth(), currentDay.getDate(), s.end.hour, s.end.minute);
+                                    const start = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate());
+                                    const end = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate());
                                     if (currentDay >= start && currentDay <= end) {
-                                        style = {
+                                        titleStyle = {
                                             backgroundColor: s.color,
                                             height: '30px',
                                         };
@@ -82,11 +81,12 @@ export default function MonthCalendar({
                                     }
                                 });
                             }
+
+
                             return (
                                 <div
                                     key={dayItem.date}
                                     className="border border-solid border-gray-300 border-r-0 border-t-0 h-[110px]"
-                                    style={style}
                                     onClick={() => {
                                         const selectedDate = new Date(year, month - 1, dayItem.date);
                                         dispatch(setDay(selectedDate.toISOString()));
@@ -94,7 +94,7 @@ export default function MonthCalendar({
                                     }}
                                 >
                                     {dayItem.date}
-                                    {title}
+                                    <div style={titleStyle}>{title}</div>
                                 </div>
                             );
                         })}
