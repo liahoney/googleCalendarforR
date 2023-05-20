@@ -1,6 +1,17 @@
 # googleCalendarforR
  구글 캘린더처럼 주별 달력, 월별 달력을 구현하고 스케줄을 등록할 수 있게 함
 
+# 결과 시연
+
+
+
+https://github.com/liahoney/googleCalendarforR/assets/85091788/517664cc-6dff-4798-a3b4-38ef6c0e68c6
+
+
+
+https://github.com/liahoney/googleCalendarforR/assets/85091788/ddfbb902-db98-47a4-bade-42df98f5f76c
+
+
 # 실행
 npm start
 
