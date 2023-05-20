@@ -2,11 +2,9 @@ import { useSelector } from "react-redux";
 import { currentCalendar, setDay, setMonth } from "../store/modules/calendar";
 import { useDispatch } from "react-redux";
 import { Dispatch, SetStateAction, useState } from "react";
-
-import { sl } from "date-fns/locale";
+import { typeScheduleDetail } from "../.."
 import { typeDays } from "../..";
 import { schedules } from "../store/modules/shedule";
-import DatePicker from "./DatePicker";
 
 export default function MonthCalendar({
     daysOfMonth,
@@ -17,7 +15,7 @@ export default function MonthCalendar({
     setIsDeleteOpen,
     isOpen,
     isModal,
-    setIsOpen,
+    setIsOpen
 }: {
     daysOfMonth: typeDays[];
     setModalDate: Dispatch<SetStateAction<string>>;
@@ -48,21 +46,10 @@ export default function MonthCalendar({
         setDeleteBox(cursor)
         setDeleteSchedule(scheduleData)
     }
-    const mockDate = {
-        scheduleDate: new Date('2023-04-01'),
-        color: 'green',
-        px: '20px',
-    }
-
-
 
     const [deleteBox, setDeleteBox] = useState<{ top: number; left: number }>({ top: 100, left: 100 })
     return (
-        // <>
 
-        //     <DatePicker isOpen={isOpen} isModal={isModal} />
-
-        // </>
         <div className="lg:flex lg:h-full lg:flex-col col-span-5">
             <div className="shadow-lg mt-3 ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
                 <div className="grid grid-cols-7 gap-px border-l border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
@@ -78,11 +65,22 @@ export default function MonthCalendar({
                         {daysOfMonth.map((dayItem) => {
                             const currentDay = new Date(year, month - 1, dayItem.date);
                             let style = {};
-                            if (mockDate.scheduleDate.toISOString().split('T')[0] === currentDay.toISOString().split('T')[0]) {
-                                style = {
-                                    backgroundColor: mockDate.color,
-                                    height: mockDate.px,
-                                }
+                            let title = '';
+                            const scheduleDataForCurrentDay = scheduleData[currentDay.toISOString().split('T')[0]];
+                            if (scheduleDataForCurrentDay) {
+                                scheduleDataForCurrentDay.forEach((s: typeScheduleDetail) => {
+                                    const start = new Date(currentDay.getFullYear(),
+                                        currentDay.getMonth(), currentDay.getDate(), s.start.hour, s.start.minute);
+                                    const end = new Date(currentDay.getFullYear(),
+                                        currentDay.getMonth(), currentDay.getDate(), s.end.hour, s.end.minute);
+                                    if (currentDay >= start && currentDay <= end) {
+                                        style = {
+                                            backgroundColor: s.color,
+                                            height: '30px',
+                                        };
+                                        title = s.title;
+                                    }
+                                });
                             }
                             return (
                                 <div
@@ -92,29 +90,11 @@ export default function MonthCalendar({
                                     onClick={() => {
                                         const selectedDate = new Date(year, month - 1, dayItem.date);
                                         dispatch(setDay(selectedDate.toISOString()));
-                                        setIsOpen(!isOpen)
+                                        setIsOpen(!isOpen);
                                     }}
                                 >
                                     {dayItem.date}
-                                </div>
-                            )
-                        })}
-                        {scheduleData[day]?.map((s: any, idx: any) => {
-                            let top = '220px';
-                            let height = '220px';
-                            return (
-                                <div
-                                    key={idx}
-                                    data-schedule={{ date: day, index: idx }}
-                                    style={{ top: top, height: height, background: 'orange' }}
-                                    onClick={(e) => {
-                                        scheduleHandle(
-                                            { top: e.clientY, left: e.clientX },
-                                            { date: day, index: idx }
-                                        )
-                                    }}
-                                >
-                                    {s.title}
+                                    {title}
                                 </div>
                             );
                         })}
