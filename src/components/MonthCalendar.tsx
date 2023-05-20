@@ -62,14 +62,14 @@ export default function MonthCalendar({
 
                 <div className="flex bg-white-200 text-xs leading-6 text-gray-700 lg:flex-auto lg:h-screen md:h-screen overflow-scroll">
                     <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
-                        {daysOfMonth.map((dayItem) => {
+                        {daysOfMonth?.map((dayItem) => {
                             const currentDay = new Date(year, month - 1, dayItem.date + 1);
                             let style = {};
                             let title = '';
-                            let titleStyle: any = {}; // Add this line
+                            let titleStyle: any = {};
                             const scheduleDataForCurrentDay = scheduleData[currentDay.toISOString().split('T')[0]];
                             if (scheduleDataForCurrentDay) {
-                                scheduleDataForCurrentDay.forEach((s: typeScheduleDetail) => {
+                                scheduleDataForCurrentDay?.forEach((s: typeScheduleDetail) => {
                                     const start = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate());
                                     const end = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate());
                                     if (currentDay >= start && currentDay <= end) {

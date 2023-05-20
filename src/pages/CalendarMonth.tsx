@@ -22,7 +22,6 @@ export default function CalendarMonth() {
     const [weekView, setWeekView] = useState(true);
 
 
-    console.log('addschedulemodal', isOpen)
     return (
         <>
             <Header setWeekView={setWeekView} weekView={false} year={year} month={month} isLeftCalendar={isLeftCalendar} setIsLeftCalendar={setIsLeftCalendar} />

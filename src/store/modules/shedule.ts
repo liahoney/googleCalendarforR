@@ -21,11 +21,9 @@ export const scheduleSlice = createSlice({
     reducers: {
         addSchedule: (state, action: PayloadAction<{ date: string, data: typeScheduleDetail }>) => {
             if (!state[action.payload.date]) {
-                state[action.payload.date] = []
+                state[action.payload.date] = [];
             }
-            else {
-                state[action.payload.date] = [...state[action.payload.date], action.payload.data]
-            }
+            state[action.payload.date].push(action.payload.data);
         },
         removeSchedule: (state, action: PayloadAction<{ date: string, index: number }>) => {
             const { date, index } = action.payload;
