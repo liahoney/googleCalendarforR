@@ -18,7 +18,7 @@ npm start
 localhost:3000에 접속 
 
 # 사용
-React, Redux, tailwind css, typescript
+React, Redux, tailwind css, typescript, react-day-picker
 
 # 기능구현
 1. 반응형구현하기
@@ -27,7 +27,7 @@ React, Redux, tailwind css, typescript
 4. 주달력의 스케줄 삭제하기
 5. 월 달력의 주 이동, 월 이동
 6. 월 달력의 스케줄 등록하기
-7. 월 달력의 스케줄 삭제하기
+
 
 # 파일 설명
 src/components
