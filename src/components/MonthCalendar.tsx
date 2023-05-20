@@ -17,7 +17,7 @@ export default function MonthCalendar({
     setIsDeleteOpen,
     isOpen,
     isModal,
-    setIsOpen
+    setIsOpen,
 }: {
     daysOfMonth: typeDays[];
     setModalDate: Dispatch<SetStateAction<string>>;
@@ -47,9 +47,14 @@ export default function MonthCalendar({
         setIsDeleteOpen(true)
         setDeleteBox(cursor)
         setDeleteSchedule(scheduleData)
-
-
     }
+    const mockDate = {
+        scheduleDate: new Date('2023-04-01'),
+        color: 'green',
+        px: '20px',
+    }
+
+
 
     const [deleteBox, setDeleteBox] = useState<{ top: number; left: number }>({ top: 100, left: 100 })
     return (
@@ -69,26 +74,31 @@ export default function MonthCalendar({
                 </div>
 
                 <div className="flex bg-white-200 text-xs leading-6 text-gray-700 lg:flex-auto lg:h-screen md:h-screen overflow-scroll">
-                    <div
-                        className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px"
-                    >
-                        {daysOfMonth.map((dayItem) => (
-                            <div
-                                key={dayItem.date}
-                                className="border border-solid border-gray-300 border-r-0 border-t-0 h-[110px]"
-                                onClick={() => {
-                                    const selectedDate = new Date(year, month - 1, dayItem.date);
-                                    console.log(`you clicked ${selectedDate} day`)
-
-                                    dispatch(setDay(selectedDate.toISOString()));
-                                    console.log(`!!you clicked ${dayItem.date} day`);
-                                    console.log('you clicked modal', isOpen)
-                                    setIsOpen(!isOpen)
-                                }}
-                            >
-                                {dayItem.date}
-                            </div>
-                        ))}
+                    <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
+                        {daysOfMonth.map((dayItem) => {
+                            const currentDay = new Date(year, month - 1, dayItem.date);
+                            let style = {};
+                            if (mockDate.scheduleDate.toISOString().split('T')[0] === currentDay.toISOString().split('T')[0]) {
+                                style = {
+                                    backgroundColor: mockDate.color,
+                                    height: mockDate.px,
+                                }
+                            }
+                            return (
+                                <div
+                                    key={dayItem.date}
+                                    className="border border-solid border-gray-300 border-r-0 border-t-0 h-[110px]"
+                                    style={style}
+                                    onClick={() => {
+                                        const selectedDate = new Date(year, month - 1, dayItem.date);
+                                        dispatch(setDay(selectedDate.toISOString()));
+                                        setIsOpen(!isOpen)
+                                    }}
+                                >
+                                    {dayItem.date}
+                                </div>
+                            )
+                        })}
                         {scheduleData[day]?.map((s: any, idx: any) => {
                             let top = '220px';
                             let height = '220px';
@@ -98,12 +108,10 @@ export default function MonthCalendar({
                                     data-schedule={{ date: day, index: idx }}
                                     style={{ top: top, height: height, background: 'orange' }}
                                     onClick={(e) => {
-                                        console.log('scheduleData', scheduleData)
                                         scheduleHandle(
                                             { top: e.clientY, left: e.clientX },
                                             { date: day, index: idx }
                                         )
-
                                     }}
                                 >
                                     {s.title}

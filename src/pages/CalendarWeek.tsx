@@ -8,7 +8,6 @@ import { format } from "date-fns";
 import getThisWeek from "../util/getThisWeek";
 import AddScheduleButton from "../components/AddScheduleButton";
 import AddScheduleModal from "../components/AddScheduleModal";
-import MonthCalendar from "../components/MonthCalendar";
 
 
 
