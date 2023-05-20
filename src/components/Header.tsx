@@ -1,10 +1,11 @@
-import { Dispatch, Fragment, SetStateAction } from "react"
+import { Dispatch, Fragment, SetStateAction, useState } from "react"
 import { useDispatch } from "react-redux"
-import { lastMonth, lastWeek, nextWeek, setDay } from "../store/modules/calendar"
+import { lastMonth, lastWeek, nextMonth, nextWeek, setDay, setMonth } from "../store/modules/calendar"
 import DatePicker from "./DatePicker"
 import { Menu, Transition } from "@headlessui/react"
 import { FiChevronDown } from 'react-icons/fi'
 import classNames from "../util/classNames"
+import { MonthChangeEventHandler } from "react-day-picker"
 
 export default function Header({
     year,
@@ -22,6 +23,26 @@ export default function Header({
     setWeekView: Dispatch<SetStateAction<boolean>>;
 }) {
     const dispatch = useDispatch()
+    const [date, setDate] = useState(new Date())
+
+    const handleLastMonthClick = () => {
+        const newDate = new Date(date);
+        newDate.setMonth(date.getMonth() - 1);
+        setDate(newDate);
+        dispatch(lastMonth());
+        console.log(`you clicked lastMonth${newDate.getMonth()}`);
+    };
+
+    const handleNextMonthClick = () => {
+        const newDate = new Date(date);
+        newDate.setMonth(date.getMonth() + 1);
+        setDate(newDate);
+        dispatch(nextMonth());
+        console.log(`you clicked nextMonth${newDate.getMonth()}`);
+    };
+
+
+
     return (
 
         <header className="flex items-center jutify-between px-2 w-full h-14 border-b border-gray-300"
@@ -46,12 +67,35 @@ export default function Header({
                         >
                             오늘
                         </button>
-                        <img src="./ChevronLeft.svg" alt="logo" width={30} height={30}
-                            onClick={() => dispatch(lastWeek())}
-                            className="cursor-pointer" />
-                        <img src="./ChevronRight.svg" alt="logo" width={30} height={30}
-                            className="cursor-pointer"
-                            onClick={() => dispatch(nextWeek())} />
+                        {weekView ?
+                            <>
+                                <img src="./ChevronLeft.svg" alt="logo" width={30} height={30}
+                                    onClick={() => dispatch(lastWeek())}
+                                    className="cursor-pointer" />
+                                <img src="./ChevronRight.svg" alt="logo" width={30} height={30}
+                                    className="cursor-pointer"
+                                    onClick={() => dispatch(nextWeek())} />
+                            </>
+                            :
+                            <>
+                                <img
+                                    src="./ChevronLeft.svg"
+                                    alt="logo"
+                                    width={30}
+                                    height={30}
+                                    onClick={handleLastMonthClick}
+                                    className="cursor-pointer"
+                                />
+                                <img
+                                    src="./ChevronRight.svg"
+                                    alt="logo"
+                                    width={30}
+                                    height={30}
+                                    className="cursor-pointer"
+                                    onClick={handleNextMonthClick}
+                                />
+                            </>
+                        }
                         <span className="text-sm md:text-lg ml-3">{year}년{month}월</span>
                         <div className="hidden md:ml-4 md:flex md:items-center">
                             <Menu as="div" className="relative">
