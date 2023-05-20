@@ -104,16 +104,18 @@ src/modules
 # 트러블슈팅
 1. Header와 DatePicker를 월별달력과 주달력에서 공유하면서 월별달력이 제대로 렌더링 되지 않는 문제
 
-   *처음 했던 방법: 원래는 pages 폴더에 Calendar.tsx에서 weekView State를 사용해서 삼항연산자로 
-   weekView가 true일때는 ScheduleCalendar를 보여주고, false일때는 MonthCalendar를 렌더링했다.
+   
+    *처음 했던 방법: 원래는 pages 폴더에 Calendar.tsx에서 weekView State를 사용해서 삼항연산자로 
+     weekView가 true일때는 ScheduleCalendar를 보여주고, false일때는 MonthCalendar를 렌더링했다.
  
-   *해결 방법: pages폴더에 CalendarMonth.tsx, CalendarWeek.tsx를 만들어서 
+     *해결 방법: pages폴더에 CalendarMonth.tsx, CalendarWeek.tsx를 만들어서 
            월별 달력은 CalendarMonth에서, 주별달력은 CalendarWeek.tsx에 만들어서 코드를 나눴다.
 
 2. index.ts 파일이 import 되지 않는 문제 
-   *처음 했던 방법: import intex.ts from "../.." 이렇게 import 했다.
+   
+    *처음 했던 방법: import intex.ts from "../.." 이렇게 import 했다.
 
-   *해결 방법: eslint plugin을 install 해서 문제를 해결했다. 
+     *해결 방법: eslint plugin을 install 해서 문제를 해결했다. 
 
 3. 월별 달력에서 DatePicker의 쉐브론버튼을 눌러도 월 이동이 되지 않고 날짜가 계속 생성되는 달력이 되는 문제 
 
