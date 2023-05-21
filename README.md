@@ -119,9 +119,9 @@ src/modules
 
 3. 월별 달력에서 DatePicker의 쉐브론버튼을 눌러도 월 이동이 되지 않고 날짜가 계속 생성되는 달력이 되는 문제 
 
-    *문제 원인: Calendar 컴포넌트에서 DayPicker를 사용하는 MonthCalendar 컴포넌트에서 MonthCalendar 컴포넌트는 daypicker 패키지에 의존하기 때문이다.
+    * 문제 원인: Calendar 컴포넌트에서 DayPicker를 사용하는 MonthCalendar 컴포넌트에서 MonthCalendar 컴포넌트는 daypicker 패키지에 의존하기 때문이다.
 
-    *해결 방법: MonthCalendar 컴포넌트에서 DayPicker의 onMonthChange 핸들러를 사용하였다.
+    * 해결 방법: MonthCalendar 컴포넌트에서 DayPicker의 onMonthChange 핸들러를 사용하였다.
 
 
 
@@ -130,4 +130,21 @@ src/modules
      *처음했던방법: 주별달력의 ScheduleData에 형태를 그대로 갖고와서 문제가 발생했다.
 
      *해결 방법: {scheduleDate: ,color: ,px: , } 이런식으로 ScheduleData를 변형하여 문제 해결
+
+5. 스케줄 등록시 첫번째에 등록이 안되고 두번째 부터 등록이 되는문제
+
+     * 문제 원인: 리듀서의 액션 addSchedule의 구현이 정상적으로 이루어지지 않음
+
+     * 해결 방법: push 메서드를 사용해서 addSchedule을 수정하여 문제 해결
+
+
+6. 라우터 주소가 바뀌면 리덕스가 초기화 되는 문제
+
+    * 문제 및 원인: 주 달력에서 스케줄을 저장하면 월달력에 렌더링 되지 않는 문제 발견
+
+    * 해결 방법: 1. connect-react-router 라이브러리를 설치 및 실행 하려고 하였으나 react 버전 8에서는 작동하지 않음
+
+              2. 대체 라이브러리인 react-first-history 발견 하여 실행하였지만 버전 문제로 사용하지 않음
+
+              3. LocalStorage와 SessionStorage의 storage를 redux에서 사용하게 해주는 Redux-Persist 라이브러리를 사용하여 문제를 해결함
   
