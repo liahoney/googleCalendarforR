@@ -36,6 +36,7 @@ export default function getCalendar({ select, current }: { select: Date; current
                 isThisWeek: checkIsThisWeek(day, current),
                 isThisMonth: false,
                 day: format(day as Date, 'yyyy-MM-dd'),
+                index: 0
             })
         }
     }
@@ -50,6 +51,7 @@ export default function getCalendar({ select, current }: { select: Date; current
             isThisWeek: checkIsThisWeek(day, current),
             isThisMonth: true,
             day: format(day as Date, 'yyyy-MM-dd'),
+            index: 0
         })
         dayNumber++
         dayOfWeek = (dayOfWeek + 1) % 7
@@ -70,6 +72,7 @@ export default function getCalendar({ select, current }: { select: Date; current
                 isThisWeek: checkIsThisWeek(day, current),
                 isThisMonth: false,
                 day: format(day as Date, 'yyyy-MM-dd'),
+                index: 0
             })
         }
     }

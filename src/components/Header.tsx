@@ -1,6 +1,6 @@
 import { Dispatch, Fragment, SetStateAction, useState } from "react"
 import { useDispatch } from "react-redux"
-import { lastMonth, lastWeek, nextMonth, nextWeek, setDay, setMonth } from "../store/modules/calendar"
+import { lastMonth, lastWeek, nextMonth, nextWeek, setDay, setMonth, setYear } from "../store/modules/calendar"
 import DatePicker from "./DatePicker"
 import { Menu, Transition } from "@headlessui/react"
 import { FiChevronDown } from 'react-icons/fi'
@@ -25,20 +25,33 @@ export default function Header({
     const dispatch = useDispatch()
     const [date, setDate] = useState(new Date())
 
-    const handleLastMonthClick = () => {
-        const newDate = new Date(date);
-        newDate.setMonth(date.getMonth() - 1);
-        setDate(newDate);
-        dispatch(lastMonth());
-        console.log(`you clicked lastMonth${newDate.getMonth()}`);
+    const handlePreviousMonth = () => {
+        let newMonth = month - 1;
+        let newYear = year;
+        let adjustedMonth = newMonth;
+
+        if (newMonth === 0) {
+            newYear = year;
+            adjustedMonth = -1;
+        }
+
+        dispatch(setYear(newYear));
+        dispatch(setMonth((newMonth - 1).toString()));
+
     };
 
-    const handleNextMonthClick = () => {
-        const newDate = new Date(date);
-        newDate.setMonth(date.getMonth() + 1);
-        setDate(newDate);
-        dispatch(nextMonth());
-        console.log(`you clicked nextMonth${newDate.getMonth()}`);
+    const handleNextMonth = () => {
+        const newMonth = month;
+        let newYear = year;
+        let adjustedMonth = newMonth;
+
+        if (newMonth > 12) {
+            newYear = year + 1;
+            adjustedMonth = 1;
+        }
+
+        dispatch(setYear(newYear));
+        dispatch(setMonth(adjustedMonth.toString()));
     };
 
 
@@ -83,7 +96,7 @@ export default function Header({
                                     alt="logo"
                                     width={30}
                                     height={30}
-                                    onClick={handleLastMonthClick}
+                                    onClick={handlePreviousMonth}
                                     className="cursor-pointer"
                                 />
                                 <img
@@ -92,7 +105,7 @@ export default function Header({
                                     width={30}
                                     height={30}
                                     className="cursor-pointer"
-                                    onClick={handleNextMonthClick}
+                                    onClick={handleNextMonth}
                                 />
                             </>
                         }

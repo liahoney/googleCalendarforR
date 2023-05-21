@@ -10,6 +10,7 @@ export type typeDays = {
     isThisWeek: boolean
     isThisMonth: boolean
     day: string
+    index: number
 }
 
 export type typeHours = {

@@ -70,6 +70,14 @@ export const calendarSlice = createSlice({
             state.select = selectDateString;
             state.current = { day: selectDateString, ...newDate };
         },
+        setYear: (state, action: PayloadAction<number>) => {
+            const selectDate = new Date(state.select);
+            selectDate.setFullYear(action.payload);
+            const selectDateString = selectDate.toString();
+            const newDate = generateNewDate({ selectDate: selectDateString, changeDate: selectDateString });
+            state.select = selectDateString;
+            state.current = { day: selectDateString, ...newDate };
+        },
 
 
 
@@ -78,6 +86,6 @@ export const calendarSlice = createSlice({
 
 })
 
-export const { nextWeek, nextMonth, lastWeek, lastMonth, setDay, setMonth } = calendarSlice.actions
+export const { nextWeek, nextMonth, lastWeek, lastMonth, setDay, setMonth, setYear } = calendarSlice.actions
 export const currentCalendar = (state: RootState) => state.calendar.current
 export default calendarSlice.reducer

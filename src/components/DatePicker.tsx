@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { ClassNames, DateFormatter, DayPicker, ModifiersClassNames, MonthChangeEventHandler, SelectSingleEventHandler } from "react-day-picker"
 import styles from 'react-day-picker/dist/style.css';
 import { useDispatch, useSelector } from "react-redux"
-import { currentCalendar, nextMonth, setDay, setMonth } from "../store/modules/calendar";
+import { currentCalendar, nextMonth, setDay, setMonth, setYear } from "../store/modules/calendar";
 import { schedules, setCurrentSchedule } from "../store/modules/shedule"
 import { ko } from "date-fns/locale";
 const modifiersClassNames: ModifiersClassNames = {
@@ -39,10 +39,11 @@ export default function DatePicker({
 
     const handleMonthChange: MonthChangeEventHandler = (date: Date) => {
         const monthIndex = date.getMonth();
-        dispatch(setMonth(monthIndex.toString()));
-        console.log('monthIndex', monthIndex)
-    };
+        const yearValue = date.getFullYear();
 
+        dispatch(setYear(yearValue)); // 년도 변경
+        dispatch(setMonth(monthIndex.toString())); // 월 변경
+    };
     return (
         <div>
             <DayPicker
