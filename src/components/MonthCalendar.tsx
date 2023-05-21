@@ -112,7 +112,7 @@ export default function MonthCalendar({
                                     console.log('dayItem.date', dayItem.date)
                                 }}
                             >
-                                {dayItem.date !== 0 ? dayItem.date : null}
+                                {dayItem.date !== 1 ? dayItem.date - 1 : null}
                                 <div style={titleStyle}>{title}</div>
                             </div>
                         );
