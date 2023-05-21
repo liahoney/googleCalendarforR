@@ -149,4 +149,15 @@ src/modules
                 2. 대체 라이브러리인 react-first-history 발견 하여 실행하였지만 버전 문제로 사용하지 않음
 
                 3. LocalStorage와 SessionStorage의 storage를 redux에서 사용하게 해주는 Redux-Persist 라이브러리를 사용하여 문제를 해결함
+
+7. 월달력을 렌더링할때 1일이 일요일에 고정되는 문제 발생
+      
+      * 문제 원인 :   
+                    
+                1. 리덕스와 콘솔로그를 이용하여 알아본 결과 payload의 data가 undefined로 나타나고있었음
+                     
+                2. index 속성이 typeDays 타입에서 필수로 요구되는데 해당 객체에는 제공되지 않았기 때문에 발생하였음
+
+      * 해결 방법 :    *    getCalendar.ts에서 index값을  추가하여 해결함
+
   
