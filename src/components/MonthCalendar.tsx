@@ -63,6 +63,7 @@ export default function MonthCalendar({
                 <div className="flex bg-white-200 text-xs leading-6 text-gray-700 lg:flex-auto lg:h-screen md:h-screen overflow-scroll">
                     <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
                         {daysOfMonth?.map((dayItem) => {
+                            //  if (dayItem.date >= 1 && dayItem.date <= 12) {
                             const currentDay = new Date(year, month - 1, dayItem.date + 1);
                             let style = {};
                             let title = '';
@@ -97,6 +98,7 @@ export default function MonthCalendar({
                                     <div style={titleStyle}>{title}</div>
                                 </div>
                             );
+                            // }
                         })}
                     </div>
                 </div>
