@@ -55,43 +55,13 @@ export default function MonthCalendar({
         return {
             date: date.getDate(),
             scheduleData: scheduleDataForCurrentDay || [],
-            // 기타 필요한 속성들...
+
         };
     });
 
     const [deleteBox, setDeleteBox] = useState<{ top: number; left: number }>({ top: 100, left: 100 });
 
 
-    const handlePreviousMonth = () => {
-        let newMonth = month - 1;
-        let newYear = year;
-        let adjustedMonth = newMonth;
-
-        if (newMonth === 0) {
-            newYear = year;
-            adjustedMonth = -1;
-        }
-
-        dispatch(setYear(newYear));
-        dispatch(setMonth((newMonth - 1).toString()));
-
-    };
-
-    const handleNextMonth = () => {
-        const newMonth = month;
-        let newYear = year;
-        let adjustedMonth = newMonth;
-
-        if (newMonth > 12) {
-            newYear = year;
-            adjustedMonth = 1;
-        }
-
-        dispatch(setYear(newYear));
-        dispatch(setMonth(adjustedMonth.toString()));
-
-
-    };
     return (
         <div>
             <div>
@@ -139,9 +109,10 @@ export default function MonthCalendar({
                                     const selectedDate = new Date(year, month - 1, dayItem.date);
                                     dispatch(setDay(selectedDate.toISOString()));
                                     setIsOpen(!isOpen);
+                                    console.log('dayItem.date', dayItem.date)
                                 }}
                             >
-                                {dayItem.date}
+                                {dayItem.date - 1}
                                 <div style={titleStyle}>{title}</div>
                             </div>
                         );
