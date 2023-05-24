@@ -23,7 +23,7 @@ export default function Header({
     setWeekView: Dispatch<SetStateAction<boolean>>;
 }) {
     const dispatch = useDispatch()
-    const [date, setDate] = useState(new Date())
+    // const [date, setDate] = useState(new Date())
 
     const handlePreviousMonth = () => {
         let newMonth = month - 1;

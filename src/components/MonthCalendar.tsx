@@ -18,6 +18,8 @@ export default function MonthCalendar({
     isOpen,
     isModal,
     setIsOpen,
+    startDate,
+    endDate,
 }: {
     daysOfMonth: typeDays[];
     setModalDate: Dispatch<SetStateAction<string>>;
@@ -28,10 +30,14 @@ export default function MonthCalendar({
     setIsOpen: Dispatch<SetStateAction<boolean>>;
     isModal: boolean;
     isOpen: boolean;
+    startDate: string;
+    endDate: string;
 }) {
     const { day, year, month, days } = useSelector(currentCalendar);
     const dispatch = useDispatch();
     const scheduleData = useSelector(schedules);
+
+
 
     const [deleteSchedule, setDeleteSchedule] = useState<{ date: string; index: number }>({
         date: '',
@@ -87,18 +93,20 @@ export default function MonthCalendar({
                         let title = '';
                         let titleStyle: any = {};
                         const scheduleDataForCurrentDay = scheduleData[currentDay.toISOString().split('T')[0]];
-                        if (scheduleDataForCurrentDay) {
-                            scheduleDataForCurrentDay?.forEach((s: typeScheduleDetail) => {
-                                const start = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate());
-                                const end = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate());
-                                if (currentDay >= start && currentDay <= end) {
+                        const startDateObj = new Date(startDate);
+                        const endDateObj = new Date(endDate);
+                        // startDate와 endDate 사이의 스케줄을 렌더링
+                        if (currentDay >= startDateObj && currentDay <= endDateObj) {
+                            // 스케줄 바를 이어지도록 색상 설정
+                            if (scheduleDataForCurrentDay) {
+                                scheduleDataForCurrentDay.forEach((s: typeScheduleDetail) => {
                                     titleStyle = {
                                         backgroundColor: s.color,
                                         height: '30px',
                                     };
                                     title = s.title;
-                                }
-                            });
+                                });
+                            }
                         }
 
                         return (

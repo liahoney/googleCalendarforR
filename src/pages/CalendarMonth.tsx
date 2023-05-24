@@ -20,7 +20,8 @@ export default function CalendarMonth() {
     const [modalDate, setModalDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
     const [timeIndex, setTimeIndex] = useState<number>(0)
     const [weekView, setWeekView] = useState(true);
-
+    const [startDate, setStartDate] = useState<string>(format(new Date(), 'yyyy-MM-dd')); // 시작일
+    const [endDate, setEndDate] = useState<string>(format(new Date(), 'yyyy-MM-dd')); // 종료일
 
     return (
         <>
@@ -43,6 +44,8 @@ export default function CalendarMonth() {
                         isOpen={false}
                         isModal={true}
                         setIsOpen={setIsOpen}
+                        startDate={startDate}
+                        endDate={endDate}
                     />
                 </div>
 

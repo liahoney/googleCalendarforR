@@ -58,7 +58,8 @@ export default function DatePicker({
                 onMonthChange={handleMonthChange}
                 onSelect={(e: unknown) => {
                     dispatch(setDay((e as SelectSingleEventHandler).toString()));
-                    dispatch(setCurrentSchedule({ date: selectedDay.toString(), data: scheduleData }));
+                    dispatch(setCurrentSchedule({ startDate: selectedDay.toString(), endDate: selectedDay.toString(), data: scheduleData }));
+
                 }}
                 selected={selectedDay}
             />

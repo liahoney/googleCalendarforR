@@ -22,7 +22,8 @@ export default function AddScheduleModal({
     const [isSelectEndTime, setIsSelectEndTime] = useState<boolean>(false)
 
     const [title, setTitle] = useState<string>('')
-    const [date, setDate] = useState<string>('2021-12-31')
+    const [startDate, setStartDate] = useState<string>('2023-05-01')
+    const [endDate, setEndDate] = useState<string>('2023-05-05')
     const [color, setColor] = useState<typeColor>('red')
     const [startHour, setStartHour] = useState<number>(12)
     const [startMinute, setStartMinute] = useState<number>(12)
@@ -62,21 +63,26 @@ export default function AddScheduleModal({
         e.preventDefault()
         setIsOpen(false)
         setTitle('')
-        const schedule: { date: string; data: typeScheduleDetail } = {
-            date: date,
+        const schedule: {
+            // date: string;
+            data: typeScheduleDetail
+        } = {
+            // date: startDate,
             data: {
                 start: { hour: startHour, minute: startMinute },
                 end: { hour: endHour, minute: endMinute },
                 color: color,
                 title: title,
+                startDate: startDate,
+                endDate: endDate,
             },
         }
-        dispatch(addSchedule(schedule))
+        dispatch(addSchedule(schedule.data))
 
     }
 
     useEffect(() => {
-        setDate(defaultDate)
+        setStartDate(defaultDate)
         const defaultTime = selectTimes[timeIndex]
         startTimeChange(defaultTime.hour, defaultTime.minute, defaultTime.text, timeIndex)
     }, [defaultDate, timeIndex])
@@ -86,7 +92,7 @@ export default function AddScheduleModal({
             <div
                 className={`
         ${isOpen ? 'fixed' : 'hidden'} 
-        shadow-2xl rounded-lg z-50 top-[150px] left-8 m-auto w-[350px] bg-white flex flex-col`}
+        shadow-2xl rounded-lg z-50 top-[150px] left-8 m-auto w-[550px] bg-white flex flex-col`}
             >
                 <div className="w-full mb-3 py-1 px-3 bg-gray-100 rounded-t-lg">
                     <svg
@@ -114,10 +120,18 @@ export default function AddScheduleModal({
                     <div className="flex mt-3 relative items-center">
                         <input
                             type="date"
-                            value={date}
+                            value={startDate}
                             className="w-[110px] outline-none"
                             onChange={e => {
-                                setDate(e.target.value)
+                                setStartDate(e.target.value)
+                            }}
+                        />
+                        <input
+                            type="date"
+                            value={endDate}
+                            className="w-[110px] outline-none"
+                            onChange={e => {
+                                setEndDate(e.target.value)
                             }}
                         />
                         {isSelectStartTime && (

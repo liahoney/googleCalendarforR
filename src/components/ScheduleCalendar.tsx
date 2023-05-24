@@ -107,11 +107,19 @@ export default function ScheduleCalendar({
                                                 let h = (s.end.hour - s.start.hour) * 60 - s.start.minute + s.end.minute
                                                 if (h < 20) h = 20
                                                 const height = `${h}px`
+                                                const colorStyle = {
+                                                    top: top,
+                                                    height: height,
+                                                    background: s.color,
+                                                    left: '4px',
+                                                    right: '4px',
+                                                    width: 'calc(100% - 8px)',
+                                                };
                                                 return (
                                                     <div
                                                         key={idx}
                                                         className="scheduleBox absolute left-0 rounded w-5/6 p-[2px] text-[12px] font-light text-white overflow-y-auto"
-                                                        style={{ top: top, height: height, background: s.color }}
+                                                        style={colorStyle}
                                                         data-schedule={{ date: day.day, index: idx }}
                                                         onClick={e => {
                                                             scheduleHandle(
