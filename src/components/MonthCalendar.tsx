@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
-import { currentCalendar, lastMonth, setDay, setMonth, setYear } from "../store/modules/calendar";
+import { currentCalendar, setDay } from "../store/modules/calendar";
 import { useDispatch } from "react-redux";
 import { Dispatch, SetStateAction, useState } from "react";
-import { typeScheduleDetail } from "../..";
-import { typeDays } from "../..";
+
+
 import { schedules } from "../store/modules/shedule";
 import { dayOfWeek } from "../util/dayOfWeek";
-import { constants } from "buffer";
+import { typeDays } from "../..";
 
 export default function MonthCalendar({
     daysOfMonth,
@@ -33,11 +33,9 @@ export default function MonthCalendar({
     startDate: string;
     endDate: string;
 }) {
-    const { day, year, month, days } = useSelector(currentCalendar);
+    const { year, month } = useSelector(currentCalendar);
     const dispatch = useDispatch();
     const scheduleData = useSelector(schedules);
-
-
 
     const [deleteSchedule, setDeleteSchedule] = useState<{ date: string; index: number }>({
         date: '',
@@ -53,28 +51,27 @@ export default function MonthCalendar({
         setDeleteSchedule(scheduleData);
     };
     const firstDayOfMonth = new Date(year, month - 1, 1);
-    const firstDayOfWeek = firstDayOfMonth.getDay(); // 첫 번째 날의 요일 (0부터 일요일, 6까지 토요일)
-    const emptyCells = new Array(firstDayOfWeek).fill(null); // 첫 번째 날 이전의 빈 칸
+    const firstDayOfWeek = firstDayOfMonth.getDay();
+    const emptyCells = new Array(firstDayOfWeek).fill(null);
     const daysCells = daysOfMonth.map((dayItem) => {
         const date = new Date(year, month - 1, dayItem.date);
         const scheduleDataForCurrentDay = scheduleData[date.toISOString().split('T')[0]];
         return {
             date: date.getDate(),
             scheduleData: scheduleDataForCurrentDay || [],
-
         };
     });
 
     const [deleteBox, setDeleteBox] = useState<{ top: number; left: number }>({ top: 100, left: 100 });
-
+    type typeScheduleDetail = {
+        title: string;
+        color: string;
+    };
 
     return (
         <div>
-            <div>
-
-
-            </div>
-            <div className="grid grid-cols-7  ">
+            <div></div>
+            <div className="grid grid-cols-7">
                 {dayOfWeek.map((day) => (
                     <div key={day} className="bg-white py-2 border border-solid">
                         {day}
@@ -82,7 +79,7 @@ export default function MonthCalendar({
                 ))}
             </div>
 
-            <div className="grid grid-cols-7 ">
+            <div className="grid grid-cols-7">
                 {emptyCells.map((_, index) => (
                     <div key={`empty-${index}`} className="border border-solid border-gray-300 border-r-0 border-t-0 h-[110px]" />
                 ))}
@@ -91,16 +88,16 @@ export default function MonthCalendar({
                         const currentDay = new Date(year, month - 1, dayItem.date);
                         let style = {};
                         let title = '';
-                        let titleStyle: any = {};
+                        let titleStyle: Record<string, string> = {};
                         const scheduleDataForCurrentDay = scheduleData[currentDay.toISOString().split('T')[0]];
                         const startDateObj = new Date(startDate);
                         const endDateObj = new Date(endDate);
-                        // startDate와 endDate 사이의 스케줄을 렌더링
+
                         if (currentDay >= startDateObj && currentDay <= endDateObj) {
-                            // 스케줄 바를 이어지도록 색상 설정
                             if (scheduleDataForCurrentDay) {
                                 scheduleDataForCurrentDay.forEach((s: typeScheduleDetail) => {
                                     titleStyle = {
+                                        ...titleStyle, // 기존 스타일 유지
                                         backgroundColor: s.color,
                                         height: '30px',
                                     };

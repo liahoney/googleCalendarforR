@@ -41,7 +41,8 @@ export interface calendarType {
 
 
 export type typeTime = { hour: number, minute: number }
-export type typeColor = 'red' | 'orange' | 'yellow' | 'green' | 'blue'
+export type typeColor = 'red' | 'orange' | 'yellow' | 'green' | 'blue' | string;
+
 export type typeScheduleDetail = {
     start: typeTime;
     end: typeTime;

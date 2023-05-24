@@ -1,10 +1,10 @@
-
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import generateSelectTimes from "../util/generateSelectTimes"
+import { typeScheduleDetail } from "../store/modules/shedule" // 수정된 부분
 import { typeColor } from "../.."
-import { typeScheduleDetail } from "../.."
 import { addSchedule } from "../store/modules/shedule"
+import { format } from "date-fns"
 
 export default function AddScheduleModal({
     defaultDate,
@@ -22,8 +22,10 @@ export default function AddScheduleModal({
     const [isSelectEndTime, setIsSelectEndTime] = useState<boolean>(false)
 
     const [title, setTitle] = useState<string>('')
-    const [startDate, setStartDate] = useState<string>('2023-05-01')
-    const [endDate, setEndDate] = useState<string>('2023-05-05')
+    // const [startDate, setStartDate] = useState<string>('2023-05-01')
+    // const [endDate, setEndDate] = useState<string>('2023-05-05')
+    const [startDate, setStartDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
+    const [endDate, setEndDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
     const [color, setColor] = useState<typeColor>('red')
     const [startHour, setStartHour] = useState<number>(12)
     const [startMinute, setStartMinute] = useState<number>(12)

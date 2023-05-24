@@ -1,11 +1,32 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "..";
+import { format } from "date-fns";
 
-import { RootState } from ".."
-import { typeSchedule, typeScheduleDetail } from "../../.."
-import { format } from "date-fns"
+export interface typeScheduleDetail {
+    start: { hour: number; minute: number };
+    end: { hour: number; minute: number };
+    color: string;
+    title: string;
+    startDate: string;
+    endDate: string;
+}
+
+export interface typeSchedule {
+    [date: string]: typeScheduleDetail[];
+}
 
 
+export const getDatesInRange = (startDate: string, endDate: string): string[] => {
+    const dates: string[] = [];
+    const currentDate = new Date(startDate);
 
+    while (currentDate <= new Date(endDate)) {
+        dates.push(format(currentDate, 'yyyy-MM-dd'));
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dates;
+};
 
 const initialState: typeSchedule = {
     '2023-03-01': [
@@ -16,25 +37,19 @@ const initialState: typeSchedule = {
             title: '공부',
             startDate: '2023-03-01',
             endDate: '2023-03-05',
-        }]
-}
+        }
+    ]
+};
+
 export const scheduleSlice = createSlice({
     name: 'schedule',
     initialState,
     reducers: {
         addSchedule: (state, action: PayloadAction<typeScheduleDetail>) => {
             const { start, end, color, title, startDate, endDate } = action.payload;
-            const getDatesInRange = (startDate: string, endDate: string): string[] => {
-                const dates: string[] = [];
-                const currentDate = new Date(startDate);
 
-                while (currentDate <= new Date(endDate)) {
-                    dates.push(format(currentDate, 'yyyy-MM-dd'));
-                    currentDate.setDate(currentDate.getDate() + 1);
-                }
 
-                return dates;
-            };
+
             const schedule: typeScheduleDetail = {
                 start,
                 end,
@@ -45,6 +60,7 @@ export const scheduleSlice = createSlice({
             };
 
             const dateRange = getDatesInRange(startDate, endDate); // Helper function to get the range of dates
+
             dateRange.forEach((date) => {
                 if (!state[date]) {
                     state[date] = [];
@@ -61,20 +77,26 @@ export const scheduleSlice = createSlice({
                 scheduleArray.splice(index, 1); // 해당 인덱스의 스케줄 삭제
             }
         },
+
         setCurrentSchedule: (state, action: PayloadAction<{
             startDate: string,
             endDate: string,
-            // date: string,
             data: typeScheduleDetail[]
         }>) => {
             const { startDate, endDate, data } = action.payload;
-            state[action.payload.startDate] = data
-            state[action.payload.endDate] = data
+
+            const dateRange = getDatesInRange(startDate, endDate); // Helper function to get the range of dates
+
+            dateRange.forEach((date) => {
+                if (!state[date]) {
+                    state[date] = [];
+                }
+                state[date] = data;
+            });
         },
     }
+});
 
-})
-
-export const { addSchedule, removeSchedule, setCurrentSchedule } = scheduleSlice.actions
-export const schedules = (state: RootState) => state.schedule
-export default scheduleSlice.reducer
+export const { addSchedule, removeSchedule, setCurrentSchedule } = scheduleSlice.actions;
+export const schedules = (state: RootState) => state.schedule;
+export default scheduleSlice.reducer;
